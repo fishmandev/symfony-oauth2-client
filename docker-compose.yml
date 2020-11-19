@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  nginx:
+    image:  nginx:latest
+    volumes:
+      - ./code:/var/www/html
+      - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
+    links:
+      - php
+  php:
+    build:  .
+    volumes:
+      - ./code:/var/www/html
+    links:
+      - db
+  db:
+    image:  mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
