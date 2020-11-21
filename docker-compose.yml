@@ -17,3 +17,8 @@ services:
     image:  mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: password
+
+networks:
+  default:
+    external:
+      name: oauth2-service
