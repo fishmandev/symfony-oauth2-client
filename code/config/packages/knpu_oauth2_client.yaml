@@ -1,3 +1,14 @@
 knpu_oauth2_client:
     clients:
         # configure your clients as described here: https://github.com/knpuniversity/oauth2-client-bundle#configuration
+        oauth2_server:
+            type: generic
+            provider_class: League\OAuth2\Client\Provider\GenericProvider
+            provider_options:
+                urlAuthorize: http://oauth2-server.example/authorize
+                urlAccessToken: http://oauth2-server.example/token
+                urlResourceOwnerDetails: http://oauth2-server.example
+            client_id: '%env(CLIENT_ID)%'
+            client_secret: '%env(CLIENT_SECRET)%'
+            redirect_route: oauth2_check
+            redirect_params: {}
