@@ -32,5 +32,9 @@ class Oauth2Controller extends AbstractController
      */
     public function checkAction(Request $request, ClientRegistry $clientRegistry)
     {
+        $accessToken = $clientRegistry->getClient('oauth2_server')->getAccessToken()->getToken();
+        return $this->render('oauth2/check.html.twig', [
+            'accessToken' => $accessToken,
+        ]);
     }
 }

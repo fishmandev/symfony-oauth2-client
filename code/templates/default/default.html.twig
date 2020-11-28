@@ -4,3 +4,41 @@
 {% block body %}
     <h1>Hello to default action!</h1>
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function() {
+            $.ajaxSetup({
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+                },
+                error: function(err) {
+                    switch (err.status) {
+                        case 400:
+                            // bad request
+                            break;
+                        case 401:
+                            // TODO Try to use refresh token
+                            document.location = 'http://oauth2-client.example/oauth2/connect';
+                            break;
+                        case 403:
+                            // forbidden
+                            break;
+                        default:
+                            // default error handler
+                            break;
+                    }
+                },
+            });
+
+            $.ajax({
+                url: 'http://oauth2-server.example/api/default',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $( "body" ).append('<h3>'+data.user+'</h3>');
+                }
+            });
+        })
+    </script>
+{% endblock %}
